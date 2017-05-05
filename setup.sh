@@ -78,7 +78,7 @@ git clone https://github.com/aol/moloch.git
 
 git clone https://github.com/benrau87/MolochSetup.git
 
-cp MolochSetup/Moloch \Script.sh ~/moloch/
+cp MolochSetup/Moloch\ Script.sh ~/moloch/
 
 cd moloch
 
