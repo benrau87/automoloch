@@ -72,5 +72,9 @@ fi
 ########################################
 ##BEGIN MAIN SCRIPT##
 #Pre checks: These are a couple of basic sanity checks the script does before proceeding.
+wget https://files.molo.ch/builds/ubuntu-16.04/moloch_0.18.2-1_amd64.deb
+dpkg -i moloch_0.18.2-1_amd64.deb
+apt-get -f install
+dpkg -i moloch_0.18.2-1_amd64.deb
 
 
