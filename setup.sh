@@ -72,14 +72,16 @@ fi
 ########################################
 ##BEGIN MAIN SCRIPT##
 #Pre checks: These are a couple of basic sanity checks the script does before proceeding.
+cd ~
+
 git clone https://github.com/aol/moloch.git
 
 git clone https://github.com/benrau87/MolochSetup.git
 
-cp MolochSetup/Moloch /Script.sh moloch/
+cp MolochSetup/Moloch \Script.sh ~/moloch/
 
 cd moloch
 
-bash Moloch /Script.sh
+bash Moloch\ Script.sh
 
 
