@@ -75,7 +75,7 @@ fi
 
 echo -e "${YELLOW}We need to create a local Moloch admin and need a password, please type one.${NC}"
 read THEPASSWORD
-bash/ data/moloch/bin/moloch_add_user.sh admin "Admin User" $THEPASSWORD --admin
+
 
 apt-get -y install apt-transport-https
 
@@ -172,7 +172,7 @@ bash /data/moloch/bin/Configure
 bash /data/moloch/db/db.pl http://ESHOST:9200 init
 systemctl start molochcapture.service
 systemctl start molochviewer.service
-
+bash/ data/moloch/bin/moloch_add_user.sh admin "Admin User" $THEPASSWORD --admin
 #git clone https://github.com/aol/moloch.git
 
 #git clone https://github.com/benrau87/MolochSetup.git
