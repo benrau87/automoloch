@@ -97,26 +97,12 @@ ES=5.4
 NODEJS=6.10.3
 INSTALL_DIR=$PWD
 
-echo -n "Looking for java "
-which java
-JAVA_VAL=$?
 
-if [ $JAVA_VAL -ne 0 ]; then
-echo -n "Java command not found, real Java 8 is recommended for this install, would you like to install it now? [yes] "
-read INSTALLJAVA
-if [ -n "$INSTALLJAVA" -a "x$INSTALLJAVA" != "xyes" ]; then
-echo "Install java and try again"
-exit
-fi
-
-if [ -f "/etc/debian_version" ]; then
 echo debconf shared/accepted-oracle-license-v1-1 select true | \
   sudo debconf-set-selections
 apt-get install oracle-java7-installer -y
 if [ $? -ne 0 ]; then
-echo "ERROR - 'apt-get install java7' failed"
-exit
-fi
+
 
 if [ "x$http_proxy" != "x" ]; then
 JAVA_OPTS="$JAVA_OPTS `echo $http_proxy | sed 's/https*:..\(.*\):\(.*\)/-Dhttp.proxyHost=\1 -Dhttp.proxyPort=\2/'`"
