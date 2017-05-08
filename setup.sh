@@ -135,7 +135,6 @@ print_status "${YELLOW}Setting up Elasticsearch${NC}"
 systemctl daemon-reload
 systemctl enable elasticsearch.service
 systemctl start elasticsearch.service
-systemctl stop elasticsearch.service
 error_check 'Elasticsearch service setup'
 fi
 
