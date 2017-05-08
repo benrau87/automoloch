@@ -138,19 +138,19 @@ error_check 'Elasticsearch service setup'
 fi
 
 # NodeJS
-print_status "${YELLOW}Downloading and installing NodeJS${NC}"
-if [ ! -f "node-v${NODEJS}.tar.gz" ]; then
-wget http://nodejs.org/dist/v${NODEJS}/node-v${NODEJS}.tar.gz  &>> $logfile
-fi
+#print_status "${YELLOW}Downloading and installing NodeJS${NC}"
+#if [ ! -f "node-v${NODEJS}.tar.gz" ]; then
+#wget http://nodejs.org/dist/v${NODEJS}/node-v${NODEJS}.tar.gz  &>> $logfile
+#fi
 
-tar xfz node-v${NODEJS}.tar.gz   &>> $logfile
-cd node-v${NODEJS}  &>> $logfile
-./configure  &>> $logfile
-make  &>> $logfile
-make install  &>> $logfile
-./configure --prefix=${TDIR}  &>> $logfile
-make install  &>> $logfile
-error_check 'NodeJS installed'
+#tar xfz node-v${NODEJS}.tar.gz   &>> $logfile
+#cd node-v${NODEJS}  &>> $logfile
+#./configure  &>> $logfile
+#make  &>> $logfile
+#make install  &>> $logfile
+#./configure --prefix=${TDIR}  &>> $logfile
+#make install  &>> $logfile
+#error_check 'NodeJS installed'
 
 if [ "x$http_proxy" != "x" ]; then
 ${TDIR}/bin/npm config set proxy $http_proxy
