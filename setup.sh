@@ -131,10 +131,10 @@ print_status "${YELLOW}Downloading and installing Elasticsearch${NC}"
 if [ ! -f "elasticsearch-${ES}.tar.gz" ]; then
 apt-get install -y elasticsearch &>> $logfile
 error_check 'Elasticsearch Installed'
-print_status "${YELLOW}Setting up elasticsearch service${NC}"
-systemctl daemon-reload  &>> $logfile
-systemctl enable elasticsearch.service &>> $logfile
-systemctl start elasticsearch.service  &>> $logfile
+print_status "${YELLOW}Setting up Elasticsearch${NC}"
+update-rc.d elasticsearch defaults 95 10 &>> $logfile
+/etc/init.d/elasticsearch start &>> $logfile
+service elasticsearch start &>> $logfile
 error_check 'Elasticsearch service setup'
 fi
 
@@ -170,7 +170,7 @@ fi
 wget https://files.molo.ch/builds/ubuntu-16.04/moloch_0.18.2-1_amd64.deb
 dpkg -i moloch*
 bash /data/moloch/bin/Configure
-bash /data/moloch/db/db.pl http://ESHOST:9200 init
+perl /data/moloch/db/db.pl http://ESHOST:9200 init
 systemctl start molochcapture.service
 systemctl start molochviewer.service
 bash/ data/moloch/bin/moloch_add_user.sh admin "Admin User" $THEPASSWORD --admin
