@@ -77,20 +77,15 @@ echo -e "${YELLOW}We need to create a local Moloch admin and need a password, pl
 read THEPASSWORD
 
 
-apt-get -y install apt-transport-https
-
+print_status "${YELLOW}Installing dependencies and updates${NC}"
+apt-get -y install apt-transport-https &>> $logfile
 ##Java
-add-apt-repository ppa:webupd8team/java -y 
-
-#Nodejs
-#curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
-
+add-apt-repository ppa:webupd8team/java -y &>> $logfile
 ##Elasticsearch
-wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add - 
-echo "deb https://artifacts.elastic.co/packages/5.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-5.x.list
-
-apt-get update
-
+wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add - &>> $logfile
+echo "deb https://artifacts.elastic.co/packages/5.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-5.x.list &>> $logfile
+apt-get update &>> $logfile
+error_check 'Dependencies updated'
 cd ~
 
 ES=5.4
@@ -132,28 +127,32 @@ PFRING="--pfring"
 fi
 
 ## ElasticSearch
-echo "MOLOCH: Downloading and installing elastic search"
+print_status "${YELLOW}Downloading and installing elasticsearch${NC}"
 if [ ! -f "elasticsearch-${ES}.tar.gz" ]; then
-apt-get install -y elasticsearch
-systemctl daemon-reload 
-systemctl enable elasticsearch.service
-systemctl start elasticsearch.service 
+apt-get install -y elasticsearch &>> $logfile
+error_check 'Elasticsearch Installed'
+print_status "${YELLOW}Setting up elasticsearch service${NC}"
+systemctl daemon-reload  &>> $logfile
+systemctl enable elasticsearch.service &>> $logfile
+systemctl start elasticsearch.service  &>> $logfile
+error_check 'Elasticsearch service setup'
 fi
 
 # NodeJS
-echo "MOLOCH: Downloading and installing node"
+rint_status "${YELLOW}Downloading and installing node${NC}"
 cd ${INSTALL_DIR}/thirdparty
 if [ ! -f "node-v${NODEJS}.tar.gz" ]; then
-wget http://nodejs.org/dist/v${NODEJS}/node-v${NODEJS}.tar.gz
+wget http://nodejs.org/dist/v${NODEJS}/node-v${NODEJS}.tar.gz  &>> $logfile
 fi
 
-tar xfz node-v${NODEJS}.tar.gz
-cd node-v${NODEJS}
-./configure
-make
-make install
-./configure --prefix=${TDIR}
-make install
+tar xfz node-v${NODEJS}.tar.gz   &>> $logfile
+cd node-v${NODEJS}  &>> $logfile
+./configure  &>> $logfile
+make  &>> $logfile
+make install  &>> $logfile
+./configure --prefix=${TDIR}  &>> $logfile
+make install  &>> $logfile
+error_check 'NodeJS installed'
 
 if [ "x$http_proxy" != "x" ]; then
 ${TDIR}/bin/npm config set proxy $http_proxy
