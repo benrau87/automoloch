@@ -132,9 +132,10 @@ if [ ! -f "elasticsearch-${ES}.tar.gz" ]; then
 apt-get install -y elasticsearch &>> $logfile
 error_check 'Elasticsearch Installed'
 print_status "${YELLOW}Setting up Elasticsearch${NC}"
-update-rc.d elasticsearch defaults 95 10 &>> $logfile
-/etc/init.d/elasticsearch start &>> $logfile
-service elasticsearch start &>> $logfile
+systemctl daemon-reload
+systemctl enable elasticsearch.service
+systemctl start elasticsearch.service
+systemctl stop elasticsearch.service
 error_check 'Elasticsearch service setup'
 fi
 
