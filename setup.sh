@@ -72,6 +72,11 @@ fi
 ########################################
 ##BEGIN MAIN SCRIPT##
 #Pre checks: These are a couple of basic sanity checks the script does before proceeding.
+
+echo -e "${YELLOW}We need to create a local Moloch admin and need a password, please type one.${NC}"
+read THEPASSWORD
+bash/ data/moloch/bin/moloch_add_user.sh admin "Admin User" $THEPASSWORD --admin
+
 apt-get -y install apt-transport-https
 
 ##Java
@@ -97,7 +102,7 @@ which java
 JAVA_VAL=$?
 
 if [ $JAVA_VAL -ne 0 ]; then
-echo -n "java command not found, real Java 8 is recommended for this install, would you like to install it now? [yes] "
+echo -n "Java command not found, real Java 8 is recommended for this install, would you like to install it now? [yes] "
 read INSTALLJAVA
 if [ -n "$INSTALLJAVA" -a "x$INSTALLJAVA" != "xyes" ]; then
 echo "Install java and try again"
@@ -179,11 +184,6 @@ wget https://files.molo.ch/builds/ubuntu-16.04/moloch_0.18.2-1_amd64.deb
 dpkg -i moloch*
 bash /data/moloch/bin/Configure
 bash /data/moloch/db/db.pl http://ESHOST:9200 init
-
-echo -e "${YELLOW}We need to create a local Moloch admin and need a password, please type one.${NC}"
-read THEPASSWORD
-bash/ data/moloch/bin/moloch_add_user.sh admin "Admin User" $THEPASSWORD --admin
-
 systemctl start molochcapture.service
 systemctl start molochviewer.service
 
