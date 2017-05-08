@@ -78,14 +78,15 @@ read THEPASSWORD
 
 
 print_status "${YELLOW}Installing dependencies and updates${NC}"
-apt-get -y install apt-transport-https &>> $logfile
+apt-get update &>> $logfile
+apt-get -y install apt-transport-https python build-essential software-properties-common python-software-properties &>> $logfile
 ##Java
 add-apt-repository ppa:webupd8team/java -y &>> $logfile
 ##Elasticsearch
 wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add - &>> $logfile
 echo "deb https://artifacts.elastic.co/packages/5.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-5.x.list &>> $logfile
 apt-get update &>> $logfile
-install_packages libwww-perl libjson-perl python build-essential
+install_packages libwww-perl libjson-perl 
 error_check 'Dependencies updated'
 cd ~
 
