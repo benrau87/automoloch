@@ -138,8 +138,7 @@ error_check 'Elasticsearch service setup'
 fi
 
 # NodeJS
-rint_status "${YELLOW}Downloading and installing node${NC}"
-cd ${INSTALL_DIR}/thirdparty
+print_status "${YELLOW}Downloading and installing node${NC}"
 if [ ! -f "node-v${NODEJS}.tar.gz" ]; then
 wget http://nodejs.org/dist/v${NODEJS}/node-v${NODEJS}.tar.gz  &>> $logfile
 fi
