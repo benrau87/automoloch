@@ -126,7 +126,7 @@ PFRING="--pfring"
 fi
 
 ## ElasticSearch
-print_status "${YELLOW}Downloading and installing elasticsearch${NC}"
+print_status "${YELLOW}Downloading and installing Elasticsearch${NC}"
 if [ ! -f "elasticsearch-${ES}.tar.gz" ]; then
 apt-get install -y elasticsearch &>> $logfile
 error_check 'Elasticsearch Installed'
@@ -138,7 +138,7 @@ error_check 'Elasticsearch service setup'
 fi
 
 # NodeJS
-print_status "${YELLOW}Downloading and installing node${NC}"
+print_status "${YELLOW}Downloading and installing NodeJS${NC}"
 if [ ! -f "node-v${NODEJS}.tar.gz" ]; then
 wget http://nodejs.org/dist/v${NODEJS}/node-v${NODEJS}.tar.gz  &>> $logfile
 fi
