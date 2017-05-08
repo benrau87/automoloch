@@ -101,7 +101,7 @@ INSTALL_DIR=$PWD
 echo debconf shared/accepted-oracle-license-v1-1 select true | \
   sudo debconf-set-selections
 apt-get install oracle-java7-installer -y
-if [ $? -ne 0 ]; then
+
 
 
 if [ "x$http_proxy" != "x" ]; then
