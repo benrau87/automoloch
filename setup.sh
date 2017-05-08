@@ -86,7 +86,7 @@ add-apt-repository ppa:webupd8team/java -y &>> $logfile
 wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add - &>> $logfile
 echo "deb https://artifacts.elastic.co/packages/5.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-5.x.list &>> $logfile
 apt-get update &>> $logfile
-install_packages libwww-perl libjson-perl 
+install_packages libwww-perl libjson-perl ethtool
 error_check 'Dependencies updated'
 cd ~
 
