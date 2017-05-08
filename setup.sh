@@ -98,9 +98,12 @@ NODEJS=6.10.3
 INSTALL_DIR=$PWD
 
 
+##Java install for elasticsearch
+print_status "${YELLOW}Installing Java${NC}"
 echo debconf shared/accepted-oracle-license-v1-1 select true | \
-  sudo debconf-set-selections
-apt-get install oracle-java7-installer -y
+  sudo debconf-set-selections &>> $logfile
+apt-get install oracle-java7-installer -y &>> $logfile
+error_check 'Java Installed'
 
 
 
