@@ -95,27 +95,6 @@ NODEJS=6.10.3
 INSTALL_DIR=$PWD
 
 
-##Java install for elasticsearch
-print_status "${YELLOW}Installing Java${NC}"
-echo debconf shared/accepted-oracle-license-v1-1 select true | \
-  sudo debconf-set-selections &>> $logfile
-apt-get install oracle-java8-installer -y &>> $logfile
-error_check 'Java Installed'
-
-if [ "x$http_proxy" != "x" ]; then
-JAVA_OPTS="$JAVA_OPTS `echo $http_proxy | sed 's/https*:..\(.*\):\(.*\)/-Dhttp.proxyHost=\1 -Dhttp.proxyPort=\2/'`"
-export JAVA_OPTS
-echo "Because http_proxy is set ($http_proxy) setting JAVA_OPTS to ($JAVA_OPTS)"
-sleep 1
-fi
-
-if [ "x$https_proxy" != "x" ]; then
-JAVA_OPTS="$JAVA_OPTS `echo $https_proxy | sed 's/https*:..\(.*\):\(.*\)/-Dhttps.proxyHost=\1 -Dhttps.proxyPort=\2/'`"
-export JAVA_OPTS
-echo "Because https_proxy is set ($https_proxy) setting JAVA_OPTS to ($JAVA_OPTS)"
-sleep 1
-fi
-
 ##Pfring
 echo -n "Use pfring? ('yes' enables) [no] "
 read USEPFRING
@@ -125,6 +104,13 @@ echo "MOLOCH - Using pfring - Make sure to install the kernel modules"
 sleep 1
 PFRING="--pfring"
 fi
+
+##Java install for elasticsearch
+print_status "${YELLOW}Installing Java${NC}"
+echo debconf shared/accepted-oracle-license-v1-1 select true | \
+  sudo debconf-set-selections &>> $logfile
+apt-get install oracle-java8-installer -y &>> $logfile
+error_check 'Java Installed'
 
 ## ElasticSearch
 print_status "${YELLOW}Downloading and installing Elasticsearch${NC}"
@@ -152,18 +138,6 @@ fi
 #./configure --prefix=${TDIR}  &>> $logfile
 #make install  &>> $logfile
 #error_check 'NodeJS installed'
-
-if [ "x$http_proxy" != "x" ]; then
-${TDIR}/bin/npm config set proxy $http_proxy
-echo "Because http_proxy is set ($http_proxy) setting npm proxy"
-sleep 1
-fi
-
-if [ "x$https_proxy" != "x" ]; then
-${TDIR}/bin/npm config set https-proxy $https_proxy
-echo "Because https_proxy is set ($https_proxy) setting npm https-proxy"
-sleep 1
-fi
 
 
 ##Moloch
