@@ -174,6 +174,19 @@ sleep 1
 fi
 
 
+##Moloch
+wget https://files.molo.ch/builds/ubuntu-16.04/moloch_0.18.2-1_amd64.deb
+dpkg -i moloch*
+bash /data/moloch/bin/Configure
+bash /data/moloch/db/db.pl http://ESHOST:9200 init
+
+echo -e "${YELLOW}We need to create a local Moloch admin and need a password, please type one.${NC}"
+read THEPASSWORD
+bash/ data/moloch/bin/moloch_add_user.sh admin "Admin User" $THEPASSWORD --admin
+
+systemctl start molochcapture.service
+systemctl start molochviewer.service
+
 #git clone https://github.com/aol/moloch.git
 
 #git clone https://github.com/benrau87/MolochSetup.git
