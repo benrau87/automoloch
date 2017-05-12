@@ -76,10 +76,12 @@ fi
 echo -e "${YELLOW}We need to create a local Moloch admin and need a password, please type one.${NC}"
 read THEPASSWORD
 
+
+echo -e "${YELLOW}Removing any old Java sources, apt-get packages.${NC}"
 rm /var/lib/dpkg/info/oracle-java7-installer*  &>> $logfile
 rm /var/lib/dpkg/info/oracle-java8-installer*  &>> $logfile
-apt-get purge oracle-java7-installer &>> $logfile
-apt-get purge oracle-java8-installer &>> $logfile
+apt-get purge oracle-java7-installer -y &>> $logfile
+apt-get purge oracle-java8-installer -y &>> $logfile
 rm /etc/apt/sources.list.d/*java*  &>> $logfile
 
 print_status "${YELLOW}Installing dependencies and updates${NC}"
