@@ -154,13 +154,13 @@ fi
 wget https://files.molo.ch/builds/ubuntu-16.04/moloch_0.18.2-1_amd64.deb
 dpkg -i moloch*
 bash /data/moloch/bin/Configure
-service elasticsearch start
-perl /data/moloch/db/db.pl http://ESHOST:9200 init
+bash/ data/moloch/bin/moloch_add_user.sh admin "Admin User" $THEPASSWORD --admin
+perl /data/moloch/db/db.pl http://localhost:9200 init
 systemctl start molochcapture.service
 service molochcapture start
 systemctl start molochviewer.service
 service molochviewer start
-bash/ data/moloch/bin/moloch_add_user.sh admin "Admin User" $THEPASSWORD --admin
+
 #git clone https://github.com/aol/moloch.git
 
 #git clone https://github.com/benrau87/MolochSetup.git
