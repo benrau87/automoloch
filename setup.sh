@@ -89,7 +89,7 @@ apt-get -f install  &>> $logfile
 
 print_status "${YELLOW}Installing dependencies and updates${NC}"
 apt-get update &>> $logfile
-apt-get -y install apt-transport-https python build-essential software-properties-common python-software-properties &>> $logfile
+install_packages apt-transport-https python build-essential software-properties-common python-software-properties &>> $logfile
 ##Java
 add-apt-repository ppa:webupd8team/java -y &>> $logfile
 ##Elasticsearch
@@ -128,9 +128,9 @@ if [ ! -f "elasticsearch-${ES}.tar.gz" ]; then
 apt-get install -y elasticsearch &>> $logfile
 error_check 'Elasticsearch Installed'
 print_status "${YELLOW}Setting up Elasticsearch${NC}"
-systemctl daemon-reload
-systemctl enable elasticsearch.service
-systemctl start elasticsearch.service
+systemctl daemon-reload &>> $logfile
+systemctl enable elasticsearch.service &>> $logfile
+systemctl start elasticsearch.service &>> $logfile
 error_check 'Elasticsearch service setup'
 fi
 
@@ -151,16 +151,19 @@ fi
 
 
 ##Moloch
-wget https://files.molo.ch/builds/ubuntu-16.04/moloch_0.18.2-1_amd64.deb
-dpkg -i moloch*
-bash /data/moloch/bin/Configure
-bash/ data/moloch/bin/moloch_add_user.sh admin "Admin User" $THEPASSWORD --admin
-perl /data/moloch/db/db.pl http://localhost:9200 init
-systemctl start molochcapture.service
-service molochcapture start
-systemctl start molochviewer.service
-service molochviewer start
+print_status "${YELLOW}Downloading and installing Moloch${NC}"
+wget https://files.molo.ch/builds/ubuntu-16.04/moloch_0.18.2-1_amd64.deb &>> $logfile
+dpkg -i moloch* &>> $logfile
+bash /data/moloch/bin/Configure 
+bash/ data/moloch/bin/moloch_add_user.sh admin "Admin User" $THEPASSWORD --admin &>> $logfile
+perl /data/moloch/db/db.pl http://localhost:9200 init &>> $logfile
+systemctl start molochcapture.service &>> $logfile
+service molochcapture start &>> $logfile
+systemctl start molochviewer.service &>> $logfile
+service molochviewer start &>> $logfile
+error_check 'Moloch Installed'
 
+echo -e "${YELLOW}Moloch installed successfully, navigate to $HOSTNAME:8005 to view.${NC}"
 #git clone https://github.com/aol/moloch.git
 
 #git clone https://github.com/benrau87/MolochSetup.git
