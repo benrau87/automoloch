@@ -83,6 +83,9 @@ rm /var/lib/dpkg/info/oracle-java8-installer*  &>> $logfile
 apt-get purge oracle-java7-installer -y &>> $logfile
 apt-get purge oracle-java8-installer -y &>> $logfile
 rm /etc/apt/sources.list.d/*java*  &>> $logfile
+dpkg -P oracle-java7-installer  &>> $logfile
+dpkg -P oracle-java8-installer  &>> $logfile
+apt-get -f install  &>> $logfile
 
 print_status "${YELLOW}Installing dependencies and updates${NC}"
 apt-get update &>> $logfile
